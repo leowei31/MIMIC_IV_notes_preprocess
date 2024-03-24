@@ -1,350 +1,244 @@
 import time
+import re
+
 txt = """
-Name:  ___                     Unit No:   ___
+ 
+Name:  ___                 Unit No:   ___
  
 Admission Date:  ___              Discharge Date:   ___
  
 Date of Birth:  ___             Sex:   F
  
-Service: MEDICINE
+Service: ORTHOPAEDICS
  
 Allergies: 
-Percocet
+omeprazole / Iodine and Iodide Containing Products / 
+hallucinogens
  
 Attending: ___.
  
 Chief Complaint:
-abdominal fullness and discomfort
+Left hip pain 
  
 Major Surgical or Invasive Procedure:
-___ diagnostic paracentesis
-___ therapeutic paracentesis
+Status post left CRPP ___, ___
 
  
 History of Present Illness:
-___ with HIV on HAART, COPD, HCV cirrhosis complicated by 
-ascites and HE admitted with abdominal distention and pain. She 
-was admitted to ___ for the same symptoms 
-recently and had 3L fluid removed (no SBP) three days ago and 
-felt better. Since discharge, her abdomen has become 
-increasingly distended with pain. This feels similar to prior 
-episodes of ascites.  
-Her diuretics were recently decreased on ___ due to worsening 
-hyponatremia 128 and hyperkalemia 5.1. Patient states she has 
-been compliant with her HIV and diuretic medications but never 
-filled out the lactulose prescription. She states she has had 
-___ BMs daily at home. She has had some visual hallucinations 
-and forgetfulness. Her appetite has been poor.  
-In the ED, initial vitals were 98.9 88 116/88 18 97% RA. CBC 
-near baseline, INR 1.4, Na 125, Cr 0.6. AST and ALT mildly above 
-baseline 182 and 126 and albumin 2.8. Diagnostic para with 225 
-WBC, 7% PMN, total protein 0.3. UA with few bact, 6 WBC, mod 
-leuk, neg nitr, but contaminated with 6 epi. CXR clear. RUQ US 
-with no PV thrombus, moderate ascites. She was given ondansetron 
-4mg IV and morphine 2.5mg IV x1 in the ED.  
-On the floor, she is feeling improved but still has abdominal 
-distention and discomfort.  
-ROS: +Abdominal distention and pain. No black/bloody stools. No 
-___ pain or swelling. No fevers or chills. Denies chest pain, 
-nausea, vomiting. No dysuria or frequency. 
+REASON FOR CONSULT: Femur fracture
+
+HPI: ___ female presents with the above fracture s/p mechanical
+fall. This morning, pt was walking ___, when dog
+pulled on leash. Pt fell on L hip. Immediate pain. ___ ___ with movement. Denies Head strike, LOC or blood thinners.
+Denies numbness or weakness in the extremities. 
  
 Past Medical History:
-1. HCV Cirrhosis  
-2. No history of abnormal Pap smears.  
-3. She had calcification in her breast, which was removed  
-previously and per patient not, it was benign.  
-4. For HIV disease, she is being followed by Dr. ___ Dr.  
-___.  
-5. COPD  
-6. Past history of smoking.  
-7. She also had a skin lesion, which was biopsied and showed  
-skin cancer per patient report and is scheduled for a complete  
-removal of the skin lesion in ___ of this year.  
-8. She also had another lesion in her forehead with purple  
-discoloration. It was biopsied to exclude the possibility of  
-___'s sarcoma, the results is pending.  
-9. A 15 mm hypoechoic lesion on her ultrasound on ___  
-and is being monitored by an MRI.  
-10. History of dysplasia of anus in ___.  
-11. Bipolar affective disorder, currently manic, mild, and PTSD. 
- 
-12. History of cocaine and heroin use.  
-
+- GERD  
+ - Hypercholesterolemia  
+ - Kidney stones  
+ - Mitral valve prolapse  
+ - Uterine fibroids  
+ - Osteoporosis  
+ - Migraine headaches 
  
 Social History:
 ___
 Family History:
-She a total of five siblings, but she is not  talking to most of 
-them. She only has one brother that she is in  touch with and 
-lives in ___. She is not aware of any known GI or liver 
-disease in her family.  
++ HTN - father  
++ Dementia - father  
+ 
  
 Physical Exam:
-ADMISSION PHYSICAL EXAM:  
-VS: T98.1 105/57 79 20 97RA 44.6kg  
-GENERAL: Thin chronically ill appearing woman in no acute 
-distress  
-HEENT: Sclera anicteric, MMM, no oral lesions  
-HEART: RRR, normal S1 S2, no murmurs  
-LUNGS: Clear, no wheezes, rales, or rhonchi  
-ABD: Significant distention with visible veins, bulging flanks, 
-nontender to palpation, tympanitic on percussion, normal bowel 
-sounds  
-EXT: no ___ edema, 2+ DP and ___ pulses  
-NEURO: alert and oriented, not confused, no asterixis
+General: Well-appearing female in no acute distress.
 
-DISCHARGE PE:
-VS: T 98.4 BP 95/55 (SBP ___ HR 80 RR 18 O2 95RA  
-I/O 240/150 this am  
-GENERAL: Thin chronically ill appearing woman in no acute 
-distress  
-HEENT: Sclera anicteric, MMM, no oral lesions  
-HEART: RRR, normal S1 S2, no murmurs  
-LUNGS: Clear, no wheezes, rales, or rhonchi  
-ABD: Significant distention with visible veins, bulging flanks, 
-nontender to palpation, tympanitic on percussion, normal bowel 
-sounds  
-EXT: no ___ edema, 2+ DP and ___ pulses  
-NEURO: alert and oriented, not confused, no asterixis
- 
-Pertinent Results:
-LABS ON ADMISSION:
-___ 04:10PM BLOOD ___ 
-___ Plt ___
-___ 04:10PM BLOOD ___ 
-___
-___ 04:10PM BLOOD ___ 
-___
-___ 04:10PM BLOOD ___ 
-___
-___ 04:10PM BLOOD ___
-___ 04:39PM BLOOD ___
-
-LABS ON DISCHARGE:
-___ 05:10AM BLOOD ___ 
-___ Plt ___
-___ 05:10AM BLOOD ___ ___
-___ 05:10AM BLOOD ___ 
-___
-___ 05:10AM BLOOD ___ 
-___
-___ 05:10AM BLOOD ___
-
-MICRO:
-___ 10:39 pm URINE      Source: ___. 
-
-                            **FINAL REPORT ___
-
-   URINE CULTURE (Final ___: 
-      MIXED BACTERIAL FLORA ( >= 3 COLONY TYPES), CONSISTENT 
-WITH SKIN
-      AND/OR GENITAL CONTAMINATION. 
-
-___ 7:00 pm PERITONEAL FLUID      PERITONEAL FLUID. 
-
-   GRAM STAIN (Final ___: 
-      1+    (<1 per 1000X FIELD):   POLYMORPHONUCLEAR 
-LEUKOCYTES. 
-      NO MICROORGANISMS SEEN. 
-      This is a concentrated smear made by cytospin method, 
-please refer to
-      hematology for a quantitative white blood cell count.. 
-
-   FLUID CULTURE (Final ___:    NO GROWTH. 
-
-   ANAEROBIC CULTURE (Preliminary):    NO GROWTH.
-
-___ 7:00 pm PERITONEAL FLUID      PERITONEAL FLUID. 
-
-   GRAM STAIN (Final ___: 
-      1+    (<1 per 1000X FIELD):   POLYMORPHONUCLEAR 
-LEUKOCYTES. 
-      NO MICROORGANISMS SEEN. 
-      This is a concentrated smear made by cytospin method, 
-please refer to
-      hematology for a quantitative white blood cell count.. 
-
-   FLUID CULTURE (Final ___:    NO GROWTH. 
-
-   ANAEROBIC CULTURE (Preliminary):    NO GROWTH. 
-
-Diagnositc Para:
-___ 07:00PM ASCITES ___ 
-___
-___ 07:00PM ASCITES ___
-
-IMAGING:
-___ CXR- No acute cardiopulmonary abnormality.  
-___ RUQ US-  
-1. Extremely coarse and nodular liver echotexture consistent 
-with a history of cirrhosis.  
-2. Moderate ascites.  
-3. Patent portal vein.
+Left Lower extremity:
+- Skin intact
+- No deformity, edema, ecchymosis, erythema, induration
+- Soft, non-tender thigh and leg
+- Full, painless ROM knee, and ankle
+- Fires ___
+- SILT S/S/SP/DP/T distributions
+- 1+ ___ pulses, WWP
  
 Brief Hospital Course:
-___ with HIV on HAART, HCV cirrhosis with ascites and HE, h/o 
-IVDU, COPD, bipolar disorder presents with abdominal discomfort 
-due to ___ ascites.  
- 
-# ASCITES. Now diuretic refractory given last tap was three days 
-ago with 3L removed and she has already built up moderate 
-ascites. Infectious workup negative, with CXR clear, UA 
-contaminated but not grossly positive so will f/u culture, 
-diagnostic para with only 225 WBC, RUQ US with no PV thrombus. 
-Compliant with diuretics but not following low sodium diet or 
-fluid restriction. Dr. ___ discussed possible TIPS in 
-the office but due to lung disease, that was on hold pending 
-further cardiac evaluation. Diuretics were recently decreased 
-due to hyponatremia and hyperkalemia. Held spironolactone for 
-now due to K 5.2 and increased lasix 20 -> 40. No evidence of 
-severe hyponatremia (Na<120) or renal failure Cr>2.0 to stop 
-diuretics at present. Diagnostic paracentesis negative for 
-infection. Ascitic total protein 0.3 so warrants SBP prophylaxis 
-(<1.0) and fortunately already on Bactrim for PCP prophylaxis 
-which would be appropriate for SBP ppx also. Patient did admit 
-to eating pizza and some ___ food prior to 
-admission. She had therapeutic paracentesis with 4.3L removed 
-and received 37.5G albumin IV post procedure. She felt much 
-better with resolution of abdominal discomfort. Patient is 
-scheduled for repeat paracentesis as outpatient on ___.  
+The patient presented to the emergency department and was 
+evaluated by the orthopedic surgery team. The patient was found 
+to have a left valgus impacted femoral neck fracture and was 
+admitted to the orthopedic surgery service. The patient was 
+taken to the operating room on ___ for left closed reduction 
+and percutaneous pinning of hip, which the patient tolerated 
+well. For full details of the procedure please see the 
+separately dictated operative report. The patient was taken from 
+the OR to the PACU in stable condition and after satisfactory 
+recovery from anesthesia was transferred to the floor. The 
+patient was initially given IV fluids and IV pain medications, 
+and progressed to a regular diet and oral medications by POD#1. 
+The patient was given ___ antibiotics and 
+anticoagulation per routine. The patient's home medications were 
+continued throughout this hospitalization. The patient worked 
+with ___ who determined that discharge to home with services was 
+appropriate. The ___ hospital course was otherwise 
+unremarkable.
 
-# HEPATIC ENCEPHALOPATHY. History of HE from Hep C cirrhosis. 
-Now with mild encephalopathy (hallucinations and forgetfulness) 
-due to medication noncompliance, but not acutely encephalopathic 
-and without asterixis on exam. Infectious workup negative thus 
-far. Continue lactulose 30mL TID and titrate to 3 BMs daily and 
-continue rifaximin 550mg BID. 
- 
-# HYPONATREMIA. Na 125 on admission, 128 four days ago, and 135 
-one month ago. Likely due to third spacing from worsening 
-ascites and fluid overload. 1.5L fluid restriction, low salt 
-diet. S/p therapeutic paracentesis with albumin replacement.
+At the time of discharge the patient's pain was well controlled 
+with oral medications, incisions were clean/dry/intact, and the 
+patient was voiding/moving bowels spontaneously. The patient is  
+weightbearing as tolerated in the left lower extremity, and will 
+be discharged on Lovenox for DVT prophylaxis. The patient will 
+follow up with Dr. ___ routine. A thorough discussion 
+was had with the patient regarding the diagnosis and expected 
+post-discharge course including reasons to call the office or 
+return to the hospital, and all questions were answered. The 
+patient was also given written instructions concerning 
+precautionary instructions and the appropriate follow-up care. 
+The patient expressed readiness for discharge.
 
-# CIRRHOSIS, HEPATITIS C. MELD score of 10 and Child's ___ 
-class B on this admission. Now decompensated due to ascites. 
-Hepatitis C genotype IIIB. Dr. ___ starting 
-___ and ___ with patient in clinic and the 
-insurance process was started by her office. No history of EGD, 
-needs this as outpatient for varices screening.  
- 
-# NUTRITION. Unclear if truly compliant with low salt diet. Poor 
-oral intake. Low albumin 2.8 on admission. Met with nutrition. 
- 
-# COAGULOPATHY. INR 1.4 four days ago. No evidence of active 
-bleeding. Very mild thrombocytopenia with plts 143.  
- 
-# HIV. Most recent CD4 173. On HAART. No established ID 
-provider. Continue Truvada and Isentress, Bactrim DS daily for 
-PCP ___. Needs outpatient ID appointment  
-
-# COPD. Stable. States she is on intermittent home O2 for 
-comfort at night and with abdominal distentiom. Continued home 
-COPD meds and home O2 as needed 
-
-**Transitional Issues**
-- Discontinued spironolactone ___ elevated potassium
-- Increased furosemide to 40mg daily
-- Please recheck electrolytes at next visit
-- Had paracentesis ___ with 4.3 L removed, received 37.5G 
-albumin
-- Needs outpatient ID provider
-- ___ needs more frequent paracentesis
  
 Medications on Admission:
 The Preadmission Medication list is accurate and complete.
-1. Albuterol Inhaler 2 PUFF IH Q6H:PRN wheezing, SOB 
-2. ___ (Truvada) 1 TAB PO DAILY 
-3. Furosemide 20 mg PO DAILY 
-4. Raltegravir 400 mg PO BID 
-5. Spironolactone 50 mg PO DAILY 
-6. Acetaminophen 500 mg PO Q6H:PRN pain,fever 
-7. Tiotropium Bromide 1 CAP IH DAILY 
-8. Rifaximin 550 mg PO BID 
-9. Calcium Carbonate 1250 mg PO BID 
-10. Lactulose 15 mL PO TID 
-11. Sulfameth/Trimethoprim DS 1 TAB PO DAILY 
+1. Lactaid (lactase) 3,000 unit oral DAILY:PRN 
+2. Calcium Citrate + D (calcium citrate-vitamin D3) 315-200 
+mg-unit oral DAILY 
 
  
 Discharge Medications:
-1. Acetaminophen 500 mg PO Q6H:PRN pain,fever 
-2. Albuterol Inhaler 2 PUFF IH Q6H:PRN wheezing, SOB 
-3. Calcium Carbonate 1250 mg PO BID 
-4. ___ (Truvada) 1 TAB PO DAILY 
-5. Furosemide 40 mg PO DAILY 
-6. Lactulose 15 mL PO TID 
-7. Raltegravir 400 mg PO BID 
-8. Rifaximin 550 mg PO BID 
-9. Sulfameth/Trimethoprim DS 1 TAB PO DAILY 
-10. Tiotropium Bromide 1 CAP IH DAILY 
+1.  Acetaminophen 1000 mg PO Q6H:PRN Pain - Mild/Fever  
+2.  Bisacodyl 10 mg PO/PR DAILY:PRN Constipation  
+3.  Docusate Sodium 100 mg PO BID  
+4.  Enoxaparin Sodium 40 mg SC QHS 
+RX *enoxaparin 40 mg/0.4 mL 40 mg Subcutaneously Nightly Disp 
+#*30 Syringe Refills:*0 
+5.  OxyCODONE (Immediate Release) ___ mg PO Q4H:PRN Pain - 
+Moderate 
+RX *oxycodone 5 mg 1 tablet(s) by mouth q4 PRN Disp #*25 Tablet 
+Refills:*0 
+6.  Senna 8.6 mg PO BID  
+7.  Calcium Citrate + D (calcium citrate-vitamin D3) 315-200 
+mg-unit oral DAILY  
+8.  Lactaid (lactase) 3,000 unit oral DAILY:PRN  
+9.  Multivitamins 1 TAB PO DAILY  
+10.  Vitamin D 400 UNIT PO DAILY  
 
  
 Discharge Disposition:
-Home
+Home With Service
+ 
+Facility:
+___
  
 Discharge Diagnosis:
-Primary:  diuretic refractory ascites
-Secondary: HCV cirrhosis, HIV, hyponatremia, COPD
+Left valgus impacted femoral neck fracture
 
  
 Discharge Condition:
-Mental Status: Clear and coherent.
-Level of Consciousness: Alert and interactive.
-Activity Status: Ambulatory - Independent.
+AVSS
+NAD, A&Ox3
+LLE: Incision well approximated. Dressing clean and dry. Fires 
+FHL, ___, TA, GCS. SILT ___ n distributions. 1+ DP 
+pulse, wwp distally.
 
  
 Discharge Instructions:
-Dear ___,
+INSTRUCTIONS AFTER ORTHOPAEDIC SURGERY:
 
-___ was a pleasure to take care of you at ___ 
-___. You were admitted with abdominal fullness and 
-pain from your ascites. You had a diagnostic and therapeutic 
-paracentesis with 4.3 L removed. Your spironolactone was 
-discontinued because your potassium was high. Your lasix was 
-increased to 40mg daily. You are scheduled for another 
-paracentesis on ___ prior to your other appointments that day. 
-Please call tomorrow to find out the time of the paracentesis. 
-Please continue to follow a low sodium diet and fluid 
-restriction. You should call your liver doctor or return to the 
-emergency room if you have abdominal pain, fever, chills, 
-confusion, or other concerning symptoms.
+- You were in the hospital for orthopedic surgery. It is normal 
+to feel tired or "washed out" after surgery, and this feeling 
+should improve over the first few days to week. 
+- Resume your regular activities as tolerated, but please follow 
+your weight bearing precautions strictly at all times.
 
-Sincerely,
-Your ___ medical team
+ACTIVITY AND WEIGHT BEARING:
+- Weightbearing as tolerated left lower extremity
+
+MEDICATIONS:
+  1)  Take Tylenol ___ every 6 hours around the clock. This is 
+an over the counter medication.
+  2)  Add oxycodone as needed for increased pain. Aim to wean 
+off this medication in 1 week or sooner.  This is an example on 
+how to wean down:
+Take 1 tablet every 3 hours as needed x 1 day,
+then 1 tablet every 4 hours as needed x 1 day,
+then 1 tablet every 6 hours as needed x 1 day,
+then 1 tablet every 8 hours as needed x 2 days, 
+then 1 tablet every 12 hours as needed x 1 day,
+then 1 tablet every before bedtime as needed x 1 day.  
+Then continue with Tylenol for pain.
+  3)  Do not stop the Tylenol until you are off of the narcotic 
+medication.
+  4)  Per state regulations, we are limited in the amount of 
+narcotics we can prescribe. If you require more, you must 
+contact the office to set up an appointment because we cannot 
+refill this type of pain medication over the phone. 
+  5)  Narcotic pain relievers can cause constipation, so you 
+should drink eight 8oz glasses of water daily and continue 
+following the bowel regimen as stated on your medication 
+prescription list. These meds (senna, colace, miralax) are over 
+the counter and may be obtained at any pharmacy.
+  6)  Do not drink alcohol, drive a motor vehicle, or operate 
+machinery while taking narcotic pain relievers.
+  7)  Please take all medications as prescribed by your 
+physicians at discharge.
+  8)  Continue all home medications unless specifically 
+instructed to stop by your surgeon.
+      
+ANTICOAGULATION:
+- Please take  Lovenox daily for 4 weeks
  
 Followup Instructions:
 ___
 """
+
+pattern = r'(?<=[a-z]:)'
 
 def preprocess(txt):
 
     medical_record = {}
 
     # Split the text into sections based on empty lines
-    sections = txt.split('\n\n')
-
+    # sections = txt.split('\n\n')
+    # prev_key = None
+    sections = re.split(pattern, txt)
+    
+    key = "Name"
     # Iterate through each section
     for section in sections:
         # Split the section into lines
-        lines = section.split('\n')
+        # print(section, '\n______________________LINE____________________')
+        lines = section.strip().split('\n')
         
         # Extract key-value pairs
         section_dict = {}
-        key = None
-        for line in lines:
-            if ':' in line:
-                key, value = map(str.strip, line.split(':', 1))
-                section_dict[key] = value
-            elif key:
-                section_dict[key] += ' ' + line.strip()
-        
-        # Update the main dictionary with the section dictionary
-        medical_record.update(section_dict)
+        # key = prev_key
+        medical_record[key] = ""
+        for i, line in enumerate(lines):
+            # if ':' in line:
+            # if re.search(pattern, line):
+            #     key, value = map(str.strip, line.split(':', 1))
+            #     medical_record[key] = value
+            # elif key:
+            if i == len(lines)-1:
+                break
+            medical_record[key] += ' ' + line.strip()
 
-    # Print the medical record dictionary
+        key = lines[-1][:-1]
+        # # Update the main dictionary with the section dictionary
+        # medical_record.update(section_dict)
+        # prev_key = key
+
+    # medical_record["Discharge Diagnosis"] = "Primary: " + medical_record["Primary"] + "\nSecondary:" + medical_record["Secondary"]
+    # del medical_record["Primary"]
+    # del medical_record["Secondary"]
+
+    # medical_record["Discharge Condition"] = "Mental Status: " + medical_record["Mental Status"] + "\nLevel of Consciousness: "+ medical_record["Level of Consciousness"] + "\nActivity Status: " +medical_record["Activity Status"]
+    # del medical_record["Mental Status"] 
+    # del medical_record["Level of Consciousness"]
+    # del medical_record["Activity Status"]
+
+    # Print the medical record dictionary\
     for key, value in medical_record.items():
-        # print(f"{key}: {value}")
         print("KEY:", key)
         print("VALUE:", value)
+        print('\n')
     
 
 def main():
